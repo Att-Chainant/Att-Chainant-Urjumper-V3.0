@@ -11,7 +11,6 @@ class Cart extends ChangeNotifier {
     Shoe(name: 'Air Max 270', price: '190', imagePath: 'lib/images/Air max 270.png', description: 'The Nike Air Max 270 is inspired by two icons of big Air: Air Max 180 and Air max 93.'),
     Shoe(name: 'SE MEN', price: '120', imagePath: 'lib/images/AirJordan1SEMen.jpg', description: 'Special Edition shoes. These pairs often feature one-of-a-kind designs and creative partnerships to honour special people or occasions.'), 
     Shoe(name: '1 Element', price: '120', imagePath: 'lib/images/AirJordan1Element.jpg', description: 'The latest Nike SB Dunk J-Pack Chicago keeps Jordan Brands relationship with skateboarding strong.'),
-    Shoe(name: 'Panda', price: '120', imagePath: 'lib/images/Panda.png', description: 'The Nike Dunk Low Panda features a premium leather upper with bright overlays to provide the perfect level of color blocking.'),
     
   ];
 
