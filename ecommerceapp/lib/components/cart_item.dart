@@ -5,20 +5,34 @@ import '../models/shoe.dart';
 
 class CartItem extends StatefulWidget {
   final Shoe shoe;
-  CartItem({
-    super.key,
-    required this.shoe,
-  });
+  CartItem({super.key, required this.shoe});
 
   @override
   State<CartItem> createState() => _CartItemState();
 }
 
 class _CartItemState extends State<CartItem> {
+  int _quantity = 1;  // Default quantity
+
+  void _increaseQuantity() {
+    setState(() {
+      _quantity++;
+    });
+    // Optionally update quantity in the cart in your model
+  }
+
+  void _decreaseQuantity() {
+    if (_quantity > 1) {
+      setState(() {
+        _quantity--;
+      });
+      // Optionally update quantity in the cart in your model
+    }
+  }
+
   // Remove item from cart
   void removeItemFromCart() {
     Provider.of<Cart>(context, listen: false).removeItemFromCart(widget.shoe);
-
     // Alert the user, shoe successfully removed from the cart
     showDialog(
       context: context,
@@ -33,7 +47,6 @@ class _CartItemState extends State<CartItem> {
           TextButton(
             child: const Text('Undo', style: TextStyle(color: Colors.white)),
             onPressed: () {
-              // Logic to re-add the item to the cart
               Provider.of<Cart>(context, listen: false).addItemToCart(widget.shoe);
               Navigator.of(context).pop(); // Close the dialog
             },
@@ -55,7 +68,7 @@ class _CartItemState extends State<CartItem> {
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(8),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
       child: ListTile(
         title: Text(
           widget.shoe.name,
@@ -63,9 +76,23 @@ class _CartItemState extends State<CartItem> {
         ),
         subtitle: Text('\$${widget.shoe.price}'),
         leading: Image.asset(widget.shoe.imagePath),
-        trailing: IconButton(
-          icon: const Icon(Icons.delete),
-          onPressed: () => removeItemFromCart(),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: Icon(Icons.remove),
+              onPressed: _decreaseQuantity,
+            ),
+            Text('$_quantity'), // Display the current quantity
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: _increaseQuantity,
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () => removeItemFromCart(),
+            ),
+          ],
         ),
       ),
     );
